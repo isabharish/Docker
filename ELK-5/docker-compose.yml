@@ -1,0 +1,40 @@
+version: '2'
+services:
+  elasticsearch:
+    image: elasticsearch:5
+    command: elasticsearch
+    environment:
+       - ES_JAVA_OPTS=-Xmx1g -Xms1g
+    volumes:
+       - ./elasticsearch/data:/usr/share/elasticsearch/data
+       - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+       - 9200:9200
+       - 9300:9300
+       - 9400:9400
+
+  logstash:
+    build: logstash
+    restart: always
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    environment:
+       - LS_HEAP_SIZE=2048m
+    volumes:
+       - ./logstash/log:/var/log/logstash.log
+    ports:
+       - 12201:12201/udp
+       - 5000:5000/udp
+       - 5001:5001
+       - 5044:5044
+       - 6379:6379
+    links:
+       - elasticsearch
+
+  kibana:
+    image: kibana:5
+    environment:
+       - ELASTICSEARCH_URL=http://elasticsearch:9200
+    ports:
+       - 5601:5601
+    links:
+       - elasticsearch
