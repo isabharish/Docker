@@ -39,7 +39,7 @@ sudo apt-get purge lxc-docker
  sudo apt-get install apparmor
 
 
-Docker Install
+#Docker Install
 1) Update your APT package index.
 sudo apt-get update
 
@@ -52,7 +52,7 @@ sudo service docker start
 4) Verify docker is installed correctly.
 sudo docker run hello-world
 
-Useful extras
+#Useful extras
 1) Run docker without sudo
 sudo groupadd docker
 sudo usermod -aG docker ubuntu
@@ -61,7 +61,7 @@ Logout and login
 2) If the DNS is not working inside the container, configure it manually.
 sudo gedit /etc/NetworkManager/NetworkManager.conf
 comment out the following line:
-#dns=dnsmasq
+- #dns=dnsmasq
 sudo restart network-manager
 Now the /etc/resolv.conf should have correct dns addresses. Use these to configure the docker DNS
  sudo vi /etc/default/docker
@@ -74,7 +74,7 @@ sudo service docker restart
 sudo pip install docker-compose
 Reference: https://docs.docker.com/engine/installation/linux/ubuntulinux/
 
-Useful commands
+#Useful commands
 It is easier to configure a Dockerfile for any build related commands and use docker-compose and configure docker-compose.yml version 2 for managing networking , volumes and services. I prefer to use that instead of docker command line commands. Refer to any docker project in the gitlab for sample.
 
 1) System wide docker information
@@ -147,7 +147,7 @@ docker-compose restart
  docker exec -it <container_id> tail -f <logfilenameincontainer>
 References: https://docs.docker.com/engine/reference/commandline/
 
-Debugging:
+#Debugging:
 
 1) ERROR: cannot create network, conflicts with existing network, networks have overlapping IPv4.
 Remove the existing containers which are currently referencing the network.
